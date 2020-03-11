@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mx-auto">
+    <h1 class="text-center">เพิ่มรายการขาย</h1>
+    <br />
+    <div class="card mx-auto" style="width: 35rem;">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'sell' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">ชื่อหนังสือ :</label>
+                    <input type="text" class="form-control" id="bookname" name="bookname" value="{{username}}">
+                </div>
+                <div class="form-group">
+                    <label for="username">ราคา :</label>
+                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{username}}">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">เลือกรูปภาพ :</label>
+                    <input id="id_image" type="file" accept="image/x-png, image/jpeg" class="form-control-file" name="image">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary ml-3">เพิ่มรายการ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

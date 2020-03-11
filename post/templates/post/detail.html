@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center">
+    <h1 class="d-inline text-center"> ประกาศ{{type}}หนังสือ {{detail.text_book}} </h1>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2 text-center">
+        {% if detail.picture %}
+            <img class="" src="/{{ detail.picture.url }}" alt="detail.text_book" height="350"><br><br>
+        {% endif %}
+    </div>
+    <div class="col-lg-8">
+        <div class="card mx-auto" style="width: 30rem;">
+            <div class="card-body">
+            <p><b>🔺ชื่อ</b> :  {{detail.text_book}}</p>
+            <p><b>🔺ราคา</b> : {{detail.price|floatformat:2}} บาท</p>
+            <p><b>🔺ประกาศโดย</b> : {{detail.create_by}}</p>
+            <p><b>🔺ประกาศเมื่อ</b> : {{detail.create_date|date:"d/m/Y"}} {{detail.create_date|time:"(H:i)"}}</p>
+            <div class="text-right">
+                {% if close %}
+                    <a href="{% url 'close' id=detail.id %}" class="btn btn-danger mx-auto" type="button">ปิดโพส</a>
+                {% endif %}
+            </div>
+            </div>
+        </div><br>
+        {% if show %}
+            <div class="card mx-auto" style="width: 30rem;">
+            <div class="card-body text-right">
+                <form action="{% url 'detail' id=detail.id %}" method="POST">  
+                {% csrf_token %}
+                    <div class="input-group-append mb-2">
+                        <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">คอมเมนต์</button>
+                </form>
+            </div>
+        </div><br>
+        {% endif %}
+        <div class="card mx-auto mb-5" style="width: 30rem;">
+            <div class="card-body"> 
+                <h6><b>ความคิดเห็น</b> :</h6>
+                {% for obj in  comment %}
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div>{{ obj.message }}</div>
+                            <hr class="mb-1 mt-3">
+                            <div class="text-right">โดย : {{ obj.create_by }} | เมื่อ : {{obj.create_date|date:"d/m/Y"}} {{obj.create_date|time:"(H:i)"}}</div>
+                        </div>
+                    </div><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="text-center">เว็บไซต์ซื้อ - ขายหนังสือ Textbook มือสอง</h1>
+    <br>
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card mx-auto" style="width: 30rem;">
+                <div class="card-body">
+                    <h5>>> รายการประกาศขาย</h5>
+                    <div class="row">
+                        <div class="col-2">
+                        </div>
+                        <div class="col-8">
+                            <form method="POST" action="{% url 'index' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="" name="sell_search" value="{{sell_search}}">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-primary" type="submit">ค้นหา</button>
+                                        </div>
+                                      </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <ul>
+                            {% for obj in sell_list %}
+                                <a class="blue" href="{% url 'detail' id=obj.id %}">🔹{{obj.text_book}}</a><br>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="card mx-auto" style="width: 30rem;">
+                <div class="card-body">
+                    <h5>>> รายการประกาศซื้อ</h5>
+                    <div class="row">
+                        <div class="col-2">
+                        </div>
+                        <div class="col-8">
+                            <form method="POST" action="{% url 'index' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="" name="buy_search" value="{{buy_search}}">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-warning" type="submit">ค้นหา</button>
+                                        </div>
+                                      </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <ul>
+                            {% for obj in buy_list %}
+                                <a class="orange" href="{% url 'detail' id=obj.id %}">🔸{{obj.text_book}}</a><br>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
